@@ -34,4 +34,14 @@ public class ReporteController {
 
         return ResponseEntity.ok(reportes);
     }
+
+    @GetMapping("/descargar")
+    public ResponseEntity<byte[]> descargarReporte() {
+        String csvData = reporteService.generarReporteReservasCsv();
+        byte[] output = csvData.getBytes();
+        org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+        headers.set(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_reservas.csv");
+        headers.set(org.springframework.http.HttpHeaders.CONTENT_TYPE, "text/csv");
+        return new ResponseEntity<>(output, headers, org.springframework.http.HttpStatus.OK);
+    }
 }

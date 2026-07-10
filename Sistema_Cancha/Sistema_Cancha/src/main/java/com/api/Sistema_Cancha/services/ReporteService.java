@@ -68,4 +68,22 @@ public class ReporteService {
         int ocupacion = (int) ((reservasActivas * 100) / (totalCanchas * 10)); 
         return Math.min(100, Math.max(0, ocupacion));
     }
+
+    public String generarReporteReservasCsv() {
+        List<Reserva> reservas = reservaRepository.findAll();
+        StringBuilder csv = new StringBuilder();
+        csv.append("ID,Cliente,Cancha,Fecha Reserva,Hora Inicio,Hora Fin,Estado,Total,Fecha Creacion\n");
+        for (Reserva r : reservas) {
+            csv.append(r.getId()).append(",")
+               .append(r.getCliente() != null ? r.getCliente().getNombre() + " " + r.getCliente().getApellido() : "").append(",")
+               .append(r.getCancha() != null ? r.getCancha().getNombre() : "").append(",")
+               .append(r.getFechaReserva()).append(",")
+               .append(r.getHoraInicio()).append(",")
+               .append(r.getHoraFin()).append(",")
+               .append(r.getEstado()).append(",")
+               .append(r.getTotal()).append(",")
+               .append(r.getFechaCreacion()).append("\n");
+        }
+        return csv.toString();
+    }
 }

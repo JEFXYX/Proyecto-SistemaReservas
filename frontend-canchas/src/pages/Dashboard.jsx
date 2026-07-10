@@ -17,6 +17,10 @@ const Dashboard = () => {
       .catch(error => console.error("Error fetching reportes", error));
   }, []);
 
+  const handleDescargarReporte = () => {
+    window.open('http://localhost:8080/api/reportes/descargar', '_blank');
+  };
+
   return (
     <>
       <div className="mb-10 flex justify-between items-end">
@@ -28,7 +32,7 @@ const Dashboard = () => {
           <button className="px-4 py-2 bg-white border border-outline-variant rounded-lg text-label-md text-on-surface hover:bg-surface-container-low transition-colors">
             Últimos 30 días
           </button>
-          <button className="px-4 py-2 bg-brand-emerald text-white rounded-lg text-label-md font-bold hover:brightness-95 transition-colors">
+          <button onClick={handleDescargarReporte} className="px-4 py-2 bg-brand-emerald text-white rounded-lg text-label-md font-bold hover:brightness-95 transition-colors">
             Descargar Reporte
           </button>
         </div>
